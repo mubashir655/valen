@@ -8,6 +8,53 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+/* 💗 Povanda button blush */
+.safe:hover,
+.safe:active{
+  background:#ffc1d9;
+  box-shadow:0 0 18px rgba(255,120,180,.6);
+  transform:scale(1.08);
+  transition:0.2s ease;
+}
+/* ✨ sparkle trail */
+.sparkle{
+  position:absolute;
+  font-size:14px;
+  pointer-events:none;
+  animation:sparkleFade .6s ease-out forwards;
+}
+/* 🧸 reaction emoji */
+.reaction{
+  position:absolute;
+  top:-25px;
+  right:20px;
+  font-size:26px;
+  animation:pop .4s ease;
+  pointer-events:none;
+}
+.pop{
+  animation:pop .4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.7);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+@keyframes burst{
+  from{
+    transform:scale(.3);
+    opacity:1;
+  }
+  to{
+    transform:translate(var(--x), var(--y)) scale(1.2);
+    opacity:0;
+  }
+}
+
+@keyframes sparkleFade{
+  from{opacity:1; transform:scale(1);}
+  to{opacity:0; transform:scale(1.8);}
+}
 
 body{
 height:100vh;
@@ -258,6 +305,41 @@ Umm para😌👀 <br>Mebb alland Vere company venoo...hmm? 😏
 <audio id="beep" src="https://assets.mixkit.co/sfx/preview/mixkit-scanner-beep-903.mp3"></audio>
 
 <script>
+function sparkle(x,y){
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.innerText="✨";
+  s.style.left=x+"px";
+  s.style.top=y+"px";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),600);
+}
+function reaction(emoji){
+  const r = document.createElement("div");
+  r.className = "reaction";
+  r.innerText = emoji;
+  card.appendChild(r);
+  setTimeout(() => r.remove(), 1200);
+}
+function heartBurst(){
+  const r = card.getBoundingClientRect();
+
+  for(let i=0;i<22;i++){
+    const h=document.createElement("div");
+    h.innerText="💗";
+    h.style.position="absolute";
+    h.style.left=(r.left + r.width/2)+"px";
+    h.style.top=(r.top - 10)+"px";
+    h.style.fontSize="26px";
+    h.style.pointerEvents="none";
+    h.style.setProperty("--x",(Math.random()*300-150)+"px");
+    h.style.setProperty("--y",(Math.random()*-260)+"px");
+    h.style.animation="burst 1.4s ease-out forwards";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),1400);
+  }
+}
+
 const text=document.getElementById("text");
 const buttons=document.getElementById("buttons");
 const photoBox=document.getElementById("photoBox");
@@ -293,9 +375,22 @@ buttons.appendChild(wrap);
 }
 
 function move(btn){
-btn.parentElement.style.left =
-  Math.random() * (buttons.clientWidth - 160) + "px";
+  const wrap = btn.parentElement;
+  const rect = wrap.getBoundingClientRect();
+
+  sparkle(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  );
+
+  wrap.style.left =
+    Math.random() * (buttons.clientWidth - wrap.offsetWidth) + "px";
+
+  wrap.style.top =
+    20 + Math.random() * 60 + "px";
 }
+
+
 
 function resetGame(){
 level=1;
@@ -318,7 +413,9 @@ if(level===1 && btn.id==="no"){
 level=2;
 buttons.innerHTML="";
 text.innerHTML="Ahaaa 😆 got you! Mine foreverrr,Chott trapped!";
-addBtn("escape","Escape 🏃‍♀️","run","left","⚠️ risky");
+addBtn("escape","Escape Trap 🏃‍♀️","run","left");
+reaction("👀");
+
 
 setTimeout(()=>{
 text.innerHTML="Last chance to escape 😏";
@@ -326,6 +423,7 @@ text.innerHTML="Last chance to escape 😏";
 
 setTimeout(()=>{
 text.innerHTML="Haha 😌 you can’t edyu poan avula ayyo 💗";
+reaction("🧸💗");
 card.classList.add("heartbeat");
 },6000);
 
@@ -361,19 +459,28 @@ level=4;
 }
 
 else if(level===4 && btn.id==="like"){
-text.innerHTML="Hehe 😄💗<br>You can’t unlike this game and Mebb 😌✨";
-photoBox.style.display="block";
-photoBox.innerHTML=`
-<div class="polaroid">
-<img src="images/together.jpg">
-<p>💗 mebb & chott 💗</p>
-</div>`;
-buttons.innerHTML="";
-setTimeout(()=>{
-text.innerHTML="I like you so much 💗";
-addBtn("again","🔁 Go again","safe","center");
-},5000);
+
+  heartBurst();                 // 💥 explosion
+  reaction("🥹💞");              // 🧸 cute reaction
+
+  showText("Hehe 😄💗<br>You can’t unlike this game and Mebb 😌✨");
+
+  photoBox.style.display="block";
+  photoBox.innerHTML=`
+    <div class="polaroid pop">
+      <img src="images/together.jpg">
+      <p>💗 mebb & chott 💗</p>
+    </div>
+  `;
+
+  buttons.innerHTML="";
+
+  setTimeout(()=>{
+    showText("I like you so much 💗");
+    addBtn("again","🔁 Go again","safe","center");
+  },5000);
 }
+
 
 else if(btn.id==="again"){resetGame();}
 });
@@ -401,6 +508,12 @@ e.style.top=(r.top-10+Math.random()*(r.height+20))+"px";
 document.body.appendChild(e);
 setTimeout(()=>e.remove(),4000);
 },900);
+function showText(msg){
+  text.classList.remove("pop");
+  void text.offsetWidth;
+  text.innerHTML = msg;
+  text.classList.add("pop");
+}
 
 resetGame();
 </script>
