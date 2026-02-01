@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chott Interview 💗</title>
 
 <style>
@@ -25,12 +26,19 @@ overflow:hidden;
 100%{background-position:0% 50%;}
 }
 
-/* BACKGROUND FLOAT */
+.title{
+font-size:26px;
+color:#ff6fa5;
+margin-bottom:8px;
+text-shadow:0 0 12px #ff9ac6;
+}
+
+/* background emojis */
 .bg-float{
 position:absolute;
 bottom:-40px;
-font-size:24px;
-color:rgba(255,105,180,.45);
+font-size:22px;
+color:rgba(255,105,180,.6);
 animation:bgFloat 10s linear infinite;
 pointer-events:none;
 z-index:0;
@@ -39,87 +47,126 @@ z-index:0;
 to{transform:translateY(-120vh);opacity:0;}
 }
 
-/* AURA ABOVE CARD */
-.aura{
-position:absolute;
-font-size:22px;
-animation:auraFloat 4s ease-in-out infinite;
-pointer-events:none;
-z-index:3;
-}
-@keyframes auraFloat{
-0%{transform:translateY(0);opacity:.7;}
-50%{transform:translateY(-18px);opacity:1;}
-100%{transform:translateY(0);opacity:.7;}
-}
-
-/* TITLE */
-.title{
-font-size:28px;
-color:#ff6fa5;
-margin-bottom:10px;
-text-shadow:0 0 12px #ff9ac6;
-}
-
-/* CARD */
+/* card */
 .card{
-width:360px;
+width:380px;
+max-width:92vw;
 background:#fff;
 border-radius:35px;
-padding:25px;
+padding:24px;
 text-align:center;
 position:relative;
+overflow:hidden;
 z-index:2;
-box-shadow:
-0 0 25px rgba(255,111,165,.35),
+box-shadow:0 0 25px rgba(255,111,165,.35),
 0 0 60px rgba(111,168,255,.25);
 animation:glow 3s ease-in-out infinite;
 }
 
 @keyframes glow{
-0%,100%{
-box-shadow:0 0 20px rgba(255,111,165,.3),
-0 0 50px rgba(111,168,255,.25);
-}
-50%{
-box-shadow:0 0 45px rgba(255,111,165,.55),
-0 0 90px rgba(111,168,255,.45);
-}
+0%,100%{box-shadow:0 0 20px rgba(255,111,165,.3);}
+50%{box-shadow:0 0 45px rgba(255,111,165,.55);}
 }
 
-/* POP */
-.pop{animation:pop .4s ease;}
-@keyframes pop{
-0%{transform:scale(.7);opacity:0;}
-100%{transform:scale(1);opacity:1;}
+/* heartbeat */
+.heartbeat{animation:heartbeat 1s infinite;}
+@keyframes heartbeat{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.05);}
 }
 
-/* CHIBI */
-.chibi{display:flex;justify-content:center;gap:25px;margin-bottom:10px;}
+/* scan */
+.scan{
+position:absolute;
+inset:0;
+border-radius:35px;
+background:
+linear-gradient(rgba(111,168,255,.22) 1px, transparent 1px),
+linear-gradient(90deg, rgba(111,168,255,.22) 1px, transparent 1px);
+background-size:22px 22px;
+display:none;
+pointer-events:none;
+z-index:4;
+}
+.scan-line{
+position:absolute;
+width:100%;
+height:4px;
+background:linear-gradient(to right,transparent,#6fa8ff,transparent);
+animation:scanMove 2s linear infinite;
+}
+@keyframes scanMove{
+0%{top:0;}
+100%{top:100%;}
+}
+
+/* flash */
+.flash{
+position:absolute;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+animation:flash .3s ease;
+z-index:6;
+}
+@keyframes flash{
+0%{opacity:0;}
+50%{opacity:.9;}
+100%{opacity:0;}
+}
+
+/* chibi */
+.chibi{display:flex;justify-content:center;gap:25px;margin-bottom:8px;}
 .face{
-width:90px;height:90px;border-radius:50%;
-font-size:50px;display:flex;align-items:center;justify-content:center;
-background:#ffe1ec;animation:bounce 2s infinite;
+width:85px;height:85px;border-radius:50%;
+font-size:48px;display:flex;align-items:center;justify-content:center;
+background:#ffe1ec;
+animation:bounce 2s infinite;
 }
 .face.girl{background:#e6f0ff;}
 @keyframes bounce{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
 }
 
-/* TEXT */
+/* text */
 .bubble{
-background:#f6fbff;border-radius:25px;padding:18px;
-font-size:20px;color:#ff6fa5;margin-bottom:20px;min-height:90px;
+background:#f6fbff;
+border-radius:25px;
+padding:18px;
+font-size:19px;
+font-weight:600;
+line-height:1.5;
+color:#ff6fa5;
+margin-bottom:16px;
+min-height:90px;
 }
 
-/* BUTTONS */
-.buttons{position:relative;height:110px;}
+/* buttons */
+.buttons{
+position:relative;
+height:140px;
+overflow:hidden;
+}
+
+.btn-wrap{
+position:absolute;
+top:28px;
+width:140px;
+}
+
+.btn-left{ left:20px; }
+.btn-right{ right:20px; }
+.btn-center{ left:50%; transform:translateX(-50%); }
 
 button{
-width:150px;height:48px;font-size:17px;
-border-radius:40px;border:none;cursor:pointer;
-position:absolute;top:30px;
+width:130px;
+height:40px;
+font-size:15px;
+border-radius:40px;
+border:none;
+cursor:pointer;
 }
 
 .run{
@@ -141,33 +188,56 @@ animation:breathe 2.6s ease-in-out infinite;
 50%{transform:scale(1.06);}
 }
 
-/* SCAN */
-.scan{
-position:absolute;inset:0;border-radius:35px;
-background:
-linear-gradient(rgba(111,168,255,.18) 1px, transparent 1px),
-linear-gradient(90deg, rgba(111,168,255,.18) 1px, transparent 1px);
-background-size:22px 22px;
-display:none;pointer-events:none;
+.btn-note{
+font-size:11px;
+margin-top:4px;
+color:rgba(0,0,0,.45);
+font-style:italic;
 }
-.scan-line{
-position:absolute;width:100%;height:4px;
-background:linear-gradient(to right,transparent,#6fa8ff,transparent);
-animation:scanMove 2s linear infinite;
+
+/* polaroid */
+.polaroid{
+width:180px;
+background:#fff;
+padding:10px 10px 26px;
+border-radius:8px;
+box-shadow:0 12px 25px rgba(0,0,0,.25);
+margin:10px auto;
+transform:rotate(-4deg);
+animation:photoPop .8s ease;
 }
-@keyframes scanMove{
-0%{top:0;}
-100%{top:100%;}
+.polaroid img{width:100%;border-radius:6px;}
+.polaroid p{font-size:13px;color:#ff6fa5;margin-top:6px;}
+
+@keyframes photoPop{
+from{transform:scale(.6) rotate(-10deg);opacity:0;}
+to{transform:scale(1) rotate(-4deg);opacity:1;}
+}
+
+/* over card emojis */
+.card-emoji{
+position:absolute;
+font-size:22px;
+pointer-events:none;
+animation:floatAround 4s ease-in-out infinite;
+z-index:5;
+opacity:.9;
+}
+@keyframes floatAround{
+0%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="title">💗 Chott Interview😙 💗</div>
+<div class="title">💗 Chott Interview 😙💗</div>
 
 <div class="card" id="card">
 
+<div class="flash" id="flash"></div>
 <div class="scan" id="scan"><div class="scan-line"></div></div>
 
 <div class="chibi">
@@ -175,164 +245,161 @@ animation:scanMove 2s linear infinite;
 <div class="face girl">👧🏻</div>
 </div>
 
-<div class="bubble pop" id="text">
+<div class="bubble" id="text">
 Umm para😌👀 <br>Mebb alland Vere company venoo...hmm? 😏
 </div>
 
+<div id="photoBox" style="display:none;"></div>
 <div class="buttons" id="buttons"></div>
 </div>
+
+<audio id="tap" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
+<audio id="beep" src="https://assets.mixkit.co/sfx/preview/mixkit-scanner-beep-903.mp3"></audio>
 
 <script>
 const text=document.getElementById("text");
 const buttons=document.getElementById("buttons");
-const scan=document.getElementById("scan");
+const photoBox=document.getElementById("photoBox");
 const card=document.getElementById("card");
+const scan=document.getElementById("scan");
+const flash=document.getElementById("flash");
+const tap=document.getElementById("tap");
+const beep=document.getElementById("beep");
 
 let level=1;
 
-/* TEXT POP */
-function showText(msg){
-text.classList.remove("pop");
-void text.offsetWidth;
-text.innerHTML=msg;
-text.classList.add("pop");
-}
+function playTap(){tap.currentTime=0;tap.play();}
+function playBeep(){beep.currentTime=0;beep.play();}
 
-/* ADD BUTTON */
-function addBtn(id,label,cls,left){
+function addBtn(id,label,cls,side="left",note=""){
+const wrap=document.createElement("div");
+wrap.className="btn-wrap btn-"+side;
+
 const b=document.createElement("button");
 b.id=id;
 b.textContent=label;
-b.className=cls+" pop";
-b.style.left=left+"px";
-buttons.appendChild(b);
+b.className=cls;
+wrap.appendChild(b);
+
+if(note){
+const n=document.createElement("div");
+n.className="btn-note";
+n.innerText=note;
+wrap.appendChild(n);
 }
 
-/* MOVE FLOAT */
+buttons.appendChild(wrap);
+}
+
 function move(btn){
-btn.style.left=Math.random()*(buttons.clientWidth-btn.offsetWidth)+"px";
-btn.style.top=30+Math.random()*40+"px";
+btn.parentElement.style.left =
+  Math.random() * (buttons.clientWidth - 160) + "px";
 }
 
-/* RESET */
 function resetGame(){
 level=1;
 buttons.innerHTML="";
-showText("Umm para😌👀 <br> Mebb alland Vere company venoo...hmm? 😏");
-addBtn("yes","Venam 🙈","run",10);
+photoBox.style.display="none";
+text.innerHTML="Umm para😌👀 <br> Mebb alland Vere company venoo...hmm? 😏";
+addBtn("yes","Venam 🙈","run","left","⚠️ floating");
 
-setTimeout(()=>{
-addBtn("no","Venda 🙊","safe",buttons.clientWidth-160);
-},4000);
+setTimeout(()=>addBtn("no","Venda 🙊","safe","right"),4000);
 }
 
-/* CLICK HANDLER */
 buttons.addEventListener("click",e=>{
-if(e.target.classList.contains("run")){
-move(e.target); return;
-}
+playTap();
+const btn=e.target.closest("button");
+if(!btn)return;
 
-/* LEVEL 1 */
-if(level===1 && e.target.id==="no"){
+if(btn.classList.contains("run")){move(btn);return;}
+
+if(level===1 && btn.id==="no"){
 level=2;
 buttons.innerHTML="";
-showText("Ahaaa 😆 got you! Mine foreverrr,Chott trapped");
-addBtn("escape","Escape Trap🏃‍♀️","run",10);
+text.innerHTML="Ahaaa 😆 got you! Mine foreverrr,Chott trapped!";
+addBtn("escape","Escape 🏃‍♀️","run","left","⚠️ risky");
 
-setTimeout(()=>showText("Last chnce to escape 😏"),4000);
-setTimeout(()=>showText("Haha 😌 you can’t edyu poan avula ayyo 💗"),7500);
-setTimeout(()=>addBtn("stay","Povanda 😙","safe",buttons.clientWidth-160),11500);
+setTimeout(()=>{
+text.innerHTML="Last chance to escape 😏";
+},3000);
+
+setTimeout(()=>{
+text.innerHTML="Haha 😌 you can’t edyu poan avula ayyo 💗";
+card.classList.add("heartbeat");
+},6000);
+
+
+setTimeout(()=>{
+card.classList.remove("heartbeat");
+addBtn("stay","Povanda 😙","safe","right");
+},8000);
 }
 
-/* LEVEL 2 */
-else if(level===2 && e.target.id==="stay"){
-  level=3;
-  buttons.innerHTML="";
-  scan.style.display="block";
-
-  showText("Smile for 5 seconds, beo chirk 😄");
-
-  setTimeout(()=>showText("Hmm… chirikk chottusee 😏"),4000);
-
-  setTimeout(()=>showText("Nallono chirk chottuee 😁"),7000);
-
-  setTimeout(()=>showText("👀 Nokatt nallono chirchinonn😙…"),11500);
-
-  setTimeout(()=>{
-    scan.style.display="none";
-    showText("Okayyy 😌💗 now tell me");
-    buttons.innerHTML="";
-    addBtn("like","👍 ishtyii","safe",buttons.clientWidth-160);
-    addBtn("unlike","👎 poda resilla 😒","run",10);
-    level=4;
-  },15000);   // ✅ AFTER last message
-}
-
-
-/* LEVEL 3 */
-else if(level===4 && e.target.id==="like"){
-heartBurst();   // 💥 THIS WAS MISSING
-showText("Hehe 😄💗<br>You can’t unlike this game and Mebb 😌✨");
+else if(level===2 && btn.id==="stay"){
+level=3;
 buttons.innerHTML="";
-setTimeout(()=>addBtn("again","🔁 Go again","safe",(buttons.clientWidth-150)/2),1500);
+scan.style.display="block";
+playBeep();
+
+text.innerHTML="Smile for 5 seconds, beo chirk 😄";
+
+setTimeout(()=>text.innerHTML="Hmm… chirikk chottusee 😏",4000);
+setTimeout(()=>text.innerHTML="Nallono chirk chottuee 😁",7000);
+
+setTimeout(()=>{flash.classList.add("flash");playBeep();},9000);
+setTimeout(()=>text.innerHTML="👀 Nokatt nallono chirchinonn😙…",11000);
+
+setTimeout(()=>{
+scan.style.display="none";
+text.innerHTML="Okayyy 😌💗 now tell me";
+buttons.innerHTML="";
+addBtn("like","👍 ishtyii","safe","right");
+addBtn("unlike","👎 poda resilla 😒","run","left","⚠️ escape");
+level=4;
+},15000);
 }
 
-
-/* GO AGAIN */
-else if(e.target.id==="again"){
-showText("Bye bye 👋😊<br>I LIKE YOU SO MUCH 💗");
-setTimeout(resetGame,3000);
+else if(level===4 && btn.id==="like"){
+text.innerHTML="Hehe 😄💗<br>You can’t unlike this game and Mebb 😌✨";
+photoBox.style.display="block";
+photoBox.innerHTML=`
+<div class="polaroid">
+<img src="images/together.jpg">
+<p>💗 mebb & chott 💗</p>
+</div>`;
+buttons.innerHTML="";
+setTimeout(()=>{
+text.innerHTML="I like you so much 💗";
+addBtn("again","🔁 Go again","safe","center");
+},5000);
 }
+
+else if(btn.id==="again"){resetGame();}
 });
 
-/* HEART EXPLOSION */
-function heartBurst(){
-const r=card.getBoundingClientRect();
-for(let i=0;i<20;i++){
-const h=document.createElement("div");
-h.textContent="💗";
-h.style.position="absolute";
-h.style.left=(r.left+r.width/2)+"px";
-h.style.top=(r.top-10)+"px";
-h.style.fontSize="26px";
-h.style.setProperty("--x",(Math.random()*300-150)+"px");
-h.style.setProperty("--y",(Math.random()*-260)+"px");
-h.style.animation="burst 1.4s ease-out forwards";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),1400);
-}
-}
-const st=document.createElement("style");
-st.innerHTML=`@keyframes burst{
-from{transform:scale(.2);opacity:1;}
-to{transform:translate(var(--x),var(--y)) scale(1.2);opacity:0;}
-}`;
-document.head.appendChild(st);
-
-/* BACKGROUND FLOAT */
+/* background emojis */
 setInterval(()=>{
 const e=document.createElement("div");
 e.className="bg-float";
 const arr=["💗","✨","🧸","🐻","💞","🥹","🌸","🫶","Mebb","Antedka irikk","annyu koott","adth irkatte","kittue ink","kushumban","karuthe mebb","am so cute","ishtyii","po ang pooo","Chott","Nkishtalla","poda","Mebbee","chottnte mebb","adth vaa","ing vaa","ne penn alle","chottee","ante chott","mebb and chott"];
 e.textContent=arr[Math.floor(Math.random()*arr.length)];
 e.style.left=Math.random()*100+"vw";
-e.style.fontSize=(20+Math.random()*12)+"px";
 document.body.appendChild(e);
 setTimeout(()=>e.remove(),10000);
 },700);
 
-/* AURA ABOVE CARD */
+/* over card emojis */
 setInterval(()=>{
-const a=document.createElement("div");
-a.className="aura";
+const e=document.createElement("div");
+e.className="card-emoji";
 const arr=["💗","✨","🧸","🌸","💞","😙","🎀","🫂"];
-a.textContent=arr[Math.floor(Math.random()*arr.length)];
+e.textContent=arr[Math.floor(Math.random()*arr.length)];
 const r=card.getBoundingClientRect();
-a.style.left=(r.left+Math.random()*r.width)+"px";
-a.style.top=(r.top-30)+"px";
-document.body.appendChild(a);
-setTimeout(()=>a.remove(),4000);
-},1200);
+e.style.left=(r.left-10+Math.random()*(r.width+20))+"px";
+e.style.top=(r.top-10+Math.random()*(r.height+20))+"px";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),4000);
+},900);
 
 resetGame();
 </script>
