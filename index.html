@@ -305,6 +305,22 @@ Umm para😌👀 <br>Mebb alland Vere company venoo...hmm? 😏
 <audio id="beep" src="https://assets.mixkit.co/sfx/preview/mixkit-scanner-beep-903.mp3"></audio>
 
 <script>
+let audioUnlocked = false;
+
+function unlockAudio(){
+  if(audioUnlocked) return;
+
+  tap.play().then(()=>{
+    tap.pause();
+    tap.currentTime = 0;
+    beep.play().then(()=>{
+      beep.pause();
+      beep.currentTime = 0;
+    });
+    audioUnlocked = true;
+  }).catch(()=>{});
+}
+
 function sparkle(x,y){
   const s=document.createElement("div");
   s.className="sparkle";
@@ -403,7 +419,9 @@ setTimeout(()=>addBtn("no","Venda 🙊","safe","right"),4000);
 }
 
 buttons.addEventListener("click",e=>{
-playTap();
+  unlockAudio();   // 🔓 allow sound
+  playTap();
+
 const btn=e.target.closest("button");
 if(!btn)return;
 
