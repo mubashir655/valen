@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chott Interview 💗</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Comic Sans MS',cursive;}
+
+body{
+height:100vh;
+background:linear-gradient(-45deg,#ffeaf3,#e6f3ff,#fff0f8,#eef6ff);
+background-size:400% 400%;
+animation:bgWave 14s ease infinite;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+@keyframes bgWave{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* BACKGROUND FLOAT */
+.bg-float{
+position:absolute;
+bottom:-40px;
+font-size:24px;
+color:rgba(255,105,180,.45);
+animation:bgFloat 10s linear infinite;
+pointer-events:none;
+z-index:0;
+}
+@keyframes bgFloat{
+to{transform:translateY(-120vh);opacity:0;}
+}
+
+/* AURA ABOVE CARD */
+.aura{
+position:absolute;
+font-size:22px;
+animation:auraFloat 4s ease-in-out infinite;
+pointer-events:none;
+z-index:3;
+}
+@keyframes auraFloat{
+0%{transform:translateY(0);opacity:.7;}
+50%{transform:translateY(-18px);opacity:1;}
+100%{transform:translateY(0);opacity:.7;}
+}
+
+/* TITLE */
+.title{
+font-size:28px;
+color:#ff6fa5;
+margin-bottom:10px;
+text-shadow:0 0 12px #ff9ac6;
+}
+
+/* CARD */
+.card{
+width:360px;
+background:#fff;
+border-radius:35px;
+padding:25px;
+text-align:center;
+position:relative;
+z-index:2;
+box-shadow:
+0 0 25px rgba(255,111,165,.35),
+0 0 60px rgba(111,168,255,.25);
+animation:glow 3s ease-in-out infinite;
+}
+
+@keyframes glow{
+0%,100%{
+box-shadow:0 0 20px rgba(255,111,165,.3),
+0 0 50px rgba(111,168,255,.25);
+}
+50%{
+box-shadow:0 0 45px rgba(255,111,165,.55),
+0 0 90px rgba(111,168,255,.45);
+}
+}
+
+/* POP */
+.pop{animation:pop .4s ease;}
+@keyframes pop{
+0%{transform:scale(.7);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+/* CHIBI */
+.chibi{display:flex;justify-content:center;gap:25px;margin-bottom:10px;}
+.face{
+width:90px;height:90px;border-radius:50%;
+font-size:50px;display:flex;align-items:center;justify-content:center;
+background:#ffe1ec;animation:bounce 2s infinite;
+}
+.face.girl{background:#e6f0ff;}
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+
+/* TEXT */
+.bubble{
+background:#f6fbff;border-radius:25px;padding:18px;
+font-size:20px;color:#ff6fa5;margin-bottom:20px;min-height:90px;
+}
+
+/* BUTTONS */
+.buttons{position:relative;height:110px;}
+
+button{
+width:150px;height:48px;font-size:17px;
+border-radius:40px;border:none;cursor:pointer;
+position:absolute;top:30px;
+}
+
+.run{
+background:#6fa8ff;color:white;
+animation:floatBtn 4s ease-in-out infinite;
+}
+@keyframes floatBtn{
+0%{transform:translateY(0) rotate(-4deg);}
+50%{transform:translateY(-10px) rotate(4deg);}
+100%{transform:translateY(0) rotate(-4deg);}
+}
+
+.safe{
+background:#ffd6e6;color:#ff4d79;
+animation:breathe 2.6s ease-in-out infinite;
+}
+@keyframes breathe{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.06);}
+}
+
+/* SCAN */
+.scan{
+position:absolute;inset:0;border-radius:35px;
+background:
+linear-gradient(rgba(111,168,255,.18) 1px, transparent 1px),
+linear-gradient(90deg, rgba(111,168,255,.18) 1px, transparent 1px);
+background-size:22px 22px;
+display:none;pointer-events:none;
+}
+.scan-line{
+position:absolute;width:100%;height:4px;
+background:linear-gradient(to right,transparent,#6fa8ff,transparent);
+animation:scanMove 2s linear infinite;
+}
+@keyframes scanMove{
+0%{top:0;}
+100%{top:100%;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">💗 Chott Interview😙 💗</div>
+
+<div class="card" id="card">
+
+<div class="scan" id="scan"><div class="scan-line"></div></div>
+
+<div class="chibi">
+<div class="face">👦🏻</div>
+<div class="face girl">👧🏻</div>
+</div>
+
+<div class="bubble pop" id="text">
+Umm para😌👀 <br>Mebb alland Vere company venoo...hmm? 😏
+</div>
+
+<div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+const text=document.getElementById("text");
+const buttons=document.getElementById("buttons");
+const scan=document.getElementById("scan");
+const card=document.getElementById("card");
+
+let level=1;
+
+/* TEXT POP */
+function showText(msg){
+text.classList.remove("pop");
+void text.offsetWidth;
+text.innerHTML=msg;
+text.classList.add("pop");
+}
+
+/* ADD BUTTON */
+function addBtn(id,label,cls,left){
+const b=document.createElement("button");
+b.id=id;
+b.textContent=label;
+b.className=cls+" pop";
+b.style.left=left+"px";
+buttons.appendChild(b);
+}
+
+/* MOVE FLOAT */
+function move(btn){
+btn.style.left=Math.random()*(buttons.clientWidth-btn.offsetWidth)+"px";
+btn.style.top=30+Math.random()*40+"px";
+}
+
+/* RESET */
+function resetGame(){
+level=1;
+buttons.innerHTML="";
+showText("Umm para😌👀 <br> Mebb alland Vere company venoo...hmm? 😏");
+addBtn("yes","Venam 🙈","run",10);
+
+setTimeout(()=>{
+addBtn("no","Venda 🙊","safe",buttons.clientWidth-160);
+},4000);
+}
+
+/* CLICK HANDLER */
+buttons.addEventListener("click",e=>{
+if(e.target.classList.contains("run")){
+move(e.target); return;
+}
+
+/* LEVEL 1 */
+if(level===1 && e.target.id==="no"){
+level=2;
+buttons.innerHTML="";
+showText("Ahaaa 😆 got you! Mine foreverrr,Chott trapped");
+addBtn("escape","Escape Trap🏃‍♀️","run",10);
+
+setTimeout(()=>showText("Last chnce to escape 😏"),4000);
+setTimeout(()=>showText("Haha 😌 you can’t edyu poan avula ayyo 💗"),7500);
+setTimeout(()=>addBtn("stay","Povanda 😙","safe",buttons.clientWidth-160),11500);
+}
+
+/* LEVEL 2 */
+else if(level===2 && e.target.id==="stay"){
+  level=3;
+  buttons.innerHTML="";
+  scan.style.display="block";
+
+  showText("Smile for 5 seconds, beo chirk 😄");
+
+  setTimeout(()=>showText("Hmm… chirikk chottusee 😏"),4000);
+
+  setTimeout(()=>showText("Nallono chirk chottuee 😁"),7000);
+
+  setTimeout(()=>showText("👀 Nokatt nallono chirchinonn😙…"),11500);
+
+  setTimeout(()=>{
+    scan.style.display="none";
+    showText("Okayyy 😌💗 now tell me");
+    buttons.innerHTML="";
+    addBtn("like","👍 ishtyii","safe",buttons.clientWidth-160);
+    addBtn("unlike","👎 poda resilla 😒","run",10);
+    level=4;
+  },15000);   // ✅ AFTER last message
+}
+
+
+/* LEVEL 3 */
+else if(level===4 && e.target.id==="like"){
+heartBurst();   // 💥 THIS WAS MISSING
+showText("Hehe 😄💗<br>You can’t unlike this game and Mebb 😌✨");
+buttons.innerHTML="";
+setTimeout(()=>addBtn("again","🔁 Go again","safe",(buttons.clientWidth-150)/2),1500);
+}
+
+
+/* GO AGAIN */
+else if(e.target.id==="again"){
+showText("Bye bye 👋😊<br>I LIKE YOU SO MUCH 💗");
+setTimeout(resetGame,3000);
+}
+});
+
+/* HEART EXPLOSION */
+function heartBurst(){
+const r=card.getBoundingClientRect();
+for(let i=0;i<20;i++){
+const h=document.createElement("div");
+h.textContent="💗";
+h.style.position="absolute";
+h.style.left=(r.left+r.width/2)+"px";
+h.style.top=(r.top-10)+"px";
+h.style.fontSize="26px";
+h.style.setProperty("--x",(Math.random()*300-150)+"px");
+h.style.setProperty("--y",(Math.random()*-260)+"px");
+h.style.animation="burst 1.4s ease-out forwards";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),1400);
+}
+}
+const st=document.createElement("style");
+st.innerHTML=`@keyframes burst{
+from{transform:scale(.2);opacity:1;}
+to{transform:translate(var(--x),var(--y)) scale(1.2);opacity:0;}
+}`;
+document.head.appendChild(st);
+
+/* BACKGROUND FLOAT */
+setInterval(()=>{
+const e=document.createElement("div");
+e.className="bg-float";
+const arr=["💗","✨","🧸","🐻","💞","🥹","🌸","🫶","Mebb","Antedka irikk","annyu koott","adth irkatte","kittue ink","kushumban","karuthe mebb","am so cute","ishtyii","po ang pooo","Chott","Nkishtalla","poda","Mebbee","chottnte mebb","adth vaa","ing vaa","ne penn alle","chottee","ante chott","mebb and chott"];
+e.textContent=arr[Math.floor(Math.random()*arr.length)];
+e.style.left=Math.random()*100+"vw";
+e.style.fontSize=(20+Math.random()*12)+"px";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),10000);
+},700);
+
+/* AURA ABOVE CARD */
+setInterval(()=>{
+const a=document.createElement("div");
+a.className="aura";
+const arr=["💗","✨","🧸","🌸","💞","😙","🎀","🫂"];
+a.textContent=arr[Math.floor(Math.random()*arr.length)];
+const r=card.getBoundingClientRect();
+a.style.left=(r.left+Math.random()*r.width)+"px";
+a.style.top=(r.top-30)+"px";
+document.body.appendChild(a);
+setTimeout(()=>a.remove(),4000);
+},1200);
+
+resetGame();
+</script>
+
+</body>
+</html>
